@@ -1,6 +1,6 @@
 package qai.research.blockchain
 
-import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props, ReceiveTimeout}
+import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 import qai.research.blockchain.Blocks.NewBlock
 import akka.pattern.ask
 import qai.research.blockchain.Blockchain.GetLastBlockHash

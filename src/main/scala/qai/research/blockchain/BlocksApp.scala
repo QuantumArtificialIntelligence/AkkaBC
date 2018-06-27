@@ -1,9 +1,8 @@
 package qai.research.blockchain
 
-import akka.actor.{ActorRef, ActorSystem, Props}
+import akka.actor.{ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
 import qai.research.blockchain.Blockchain.PrintBlockchain
-
 
 // A test Object to start the Blockchain
 object BlocksApp extends App {

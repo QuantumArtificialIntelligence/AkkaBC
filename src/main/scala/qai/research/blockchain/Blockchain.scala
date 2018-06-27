@@ -2,8 +2,7 @@ package qai.research.blockchain
 
 import java.util.Date
 
-import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
-import com.typesafe.config.ConfigFactory
+import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 import qai.research.blockchain.Blockchain._
 import akka.pattern.ask
 
