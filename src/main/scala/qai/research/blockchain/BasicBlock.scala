@@ -18,6 +18,5 @@ class BasicBlock(id: String, data: String, lastHash: String) extends Actor with 
 }
 
 object BasicBlock {
-  case class BlockInfo(id: String, timestamp: Long, data: String, lastHash: String, hash: String, additionalData: String = "")
-
+  case class BlockInfo(id: String, timestamp: Long, data: String, previousHash: String, hash: String, additionalData: String = "")
 }
