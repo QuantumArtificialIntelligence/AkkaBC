@@ -1,21 +1,32 @@
 package qai.research.blockchain
 
+import akka.actor.{ActorRef, ActorSystem, Props}
+import com.typesafe.config.ConfigFactory
 import qai.research.blockchain.Blockchain.PrintBlockchain
 
-object BlocksApp {
-  def main(args: Array[String]): Unit = {
-    Blockchain.main(Array("2551"))
-  }
+
+// A test Object to start the Blockchain
+object BlocksApp extends App {
+  // Override the configuration of the port when specified as program argument
+  val port = if (args.isEmpty) "0" else args(0)
+
+  val config = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port").
+    withFallback(ConfigFactory.parseString("akka.cluster.roles = [blockchain]")).
+    withFallback(ConfigFactory.load("akkablockchain"))
+
+  val system = ActorSystem("ClusterSystem", config)
+
+  val blockchain = system.actorOf(Props(new Blockchain("ActorsSuperBlockchain")), name = "blockchainActor")
+
+  val blocks = system.actorOf(Props(new Blocks(blockchain)))
+
+  system.actorOf(Props[MetricsListener], name = "metricsListener")
 
   def printBlockchain(): Unit = {
-    Blockchain.currentBlockchain.foreach(_ ! PrintBlockchain)
+    blockchain ! PrintBlockchain
   }
 
   def newBlock(data: String): Unit = {
-    Blocks.currentBlocks.foreach(cb => {
-      (1 to 1000).foreach { i =>
-        cb ! Blocks.NewBlock(i + " " + data)
-      }
-    })
+    blocks ! Blocks.NewBlock(data)
   }
 }
