@@ -21,17 +21,8 @@ object HashGeneratorUtils {
   }
 
   private def convertByteArrayToHexString(arrayBytes: Array[Byte]) = {
-    val stringBuffer = new StringBuffer
-    var i = 0
-    while ( {
-      i < arrayBytes.length
-    }) {
-      stringBuffer.append(Integer.toString((arrayBytes(i) & 0xff) + 0x100, 16).substring(1))
-
-      {
-        i += 1; i - 1
-      }
-    }
-    stringBuffer.toString
+    arrayBytes.map(byte => {
+      Integer.toString((byte & 0xff) + 0x100, 16).substring(1)
+    }).mkString
   }
 }
